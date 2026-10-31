@@ -65,13 +65,27 @@ st.markdown(
         color: #f1f5f9;
     }
 
-    /* Global Container Adjustments */
+    /* Global Container Adjustments - Ensuring full visibility below Streamlit top header */
     .block-container {
-        padding-top: 1.2rem;
-        padding-bottom: 3.5rem;
+        padding-top: 5rem !important;
+        padding-bottom: 3.5rem !important;
         max-width: 1250px;
         position: relative;
         z-index: 1;
+    }
+
+    @media (max-width: 768px) {
+        .block-container {
+            padding-top: 5.5rem !important;
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
+    }
+
+    /* Transparent top Streamlit header bar */
+    header[data-testid="stHeader"] {
+        background: transparent !important;
+        z-index: 99;
     }
 
     /* ========================================================================
@@ -422,6 +436,280 @@ st.markdown(
         margin-top: 20px;
         box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
     }
+
+    /* ========================================================================
+       5. TOP HEADER BANNER (ENSURES 100% PROMINENT VISIBILITY)
+       ======================================================================== */
+    .truthlens-banner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 0.2rem;
+        margin-bottom: 1.2rem;
+        padding-bottom: 1.1rem;
+        border-bottom: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    .truthlens-main-title {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 1.75rem;
+        font-weight: 800;
+        letter-spacing: -0.4px;
+        color: #ffffff;
+        line-height: 1.3;
+    }
+
+    .truthlens-icon {
+        font-size: 1.85rem;
+    }
+
+    .truthlens-name {
+        background: linear-gradient(135deg, #ffffff 40%, #38bdf8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 900;
+    }
+
+    .truthlens-divider {
+        color: #64748b;
+        font-weight: 300;
+    }
+
+    .truthlens-desc {
+        color: #94a3b8;
+        font-size: 1.25rem;
+        font-weight: 500;
+    }
+
+    .truthlens-pill-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(16, 185, 129, 0.12);
+        border: 1px solid rgba(16, 185, 129, 0.35);
+        border-radius: 20px;
+        padding: 6px 16px;
+        box-shadow: 0 0 14px rgba(16, 185, 129, 0.2);
+    }
+
+    .pill-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #10b981;
+        box-shadow: 0 0 8px #10b981;
+        animation: pulseDot 2s infinite ease-in-out;
+    }
+
+    .pill-label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #34d399;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+    }
+
+    @keyframes pulseDot {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    @media (max-width: 768px) {
+        .truthlens-main-title {
+            font-size: 1.35rem !important;
+        }
+        .truthlens-desc {
+            font-size: 1rem !important;
+        }
+    }
+
+    /* ========================================================================
+       6. STREAMLIT FORM CONTROLS & TEXTAREA DARK VISIBILITY FIX
+       ======================================================================== */
+    :root, .stApp {
+        color-scheme: dark !important;
+    }
+
+    /* Container for text area and inputs */
+    div[data-testid="stTextArea"],
+    div[data-testid="stTextInput"],
+    .stTextArea,
+    .stTextInput {
+        margin-top: 8px;
+        margin-bottom: 12px;
+    }
+
+    /* Input label styling - bright, crisp and high-contrast */
+    div[data-testid="stTextArea"] label,
+    div[data-testid="stTextArea"] label p,
+    div[data-testid="stTextInput"] label,
+    div[data-testid="stTextInput"] label p,
+    div[data-testid="stWidgetLabel"] p,
+    .stTextArea label {
+        color: #e2e8f0 !important;
+        -webkit-text-fill-color: #e2e8f0 !important;
+        font-size: 1.02rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.3px !important;
+        margin-bottom: 8px !important;
+    }
+
+    /* BaseWeb Outer Box / Wrapper - Dark slate with glowing cyan border */
+    div[data-testid="stTextArea"] div[data-baseweb="textarea"],
+    div[data-testid="stTextArea"] div[data-baseweb="base-input"],
+    div[data-baseweb="textarea"],
+    div[data-baseweb="base-input"],
+    div[data-baseweb="input"] {
+        background-color: #0b1120 !important;
+        background: #0b1120 !important;
+        border: 1.5px solid rgba(56, 189, 248, 0.45) !important;
+        border-radius: 14px !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), inset 0 2px 6px rgba(0, 0, 0, 0.4) !important;
+        transition: all 0.25s ease !important;
+    }
+
+    /* Outer Box Hover State */
+    div[data-testid="stTextArea"] div[data-baseweb="textarea"]:hover,
+    div[data-baseweb="textarea"]:hover {
+        border-color: rgba(56, 189, 248, 0.75) !important;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6), 0 0 14px rgba(56, 189, 248, 0.25) !important;
+    }
+
+    /* Outer Box Focus State */
+    div[data-testid="stTextArea"] div[data-baseweb="textarea"]:focus-within,
+    div[data-baseweb="textarea"]:focus-within,
+    div[data-baseweb="base-input"]:focus-within {
+        border-color: #38bdf8 !important;
+        box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.35), 0 0 25px rgba(56, 189, 248, 0.25) !important;
+    }
+
+    /* Textarea element itself - ENSURE WRITTEN CONTENT IS BRIGHT & 100% VISIBLE */
+    div[data-testid="stTextArea"] textarea,
+    div[data-baseweb="textarea"] textarea,
+    div[data-baseweb="base-input"] textarea,
+    textarea,
+    input[type="text"] {
+        background-color: #0b1120 !important;
+        background: #0b1120 !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        caret-color: #38bdf8 !important;
+        font-size: 1.05rem !important;
+        font-weight: 500 !important;
+        line-height: 1.7 !important;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+        border-radius: 12px !important;
+        border: none !important;
+        padding: 14px 16px !important;
+        box-shadow: none !important;
+    }
+
+    /* While typing or focused */
+    textarea:focus,
+    div[data-testid="stTextArea"] textarea:focus {
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        outline: none !important;
+    }
+
+    /* Placeholder text styling */
+    textarea::placeholder,
+    div[data-testid="stTextArea"] textarea::placeholder,
+    input::placeholder {
+        color: #64748b !important;
+        -webkit-text-fill-color: #64748b !important;
+        font-size: 0.98rem !important;
+        font-weight: 400 !important;
+        opacity: 0.85 !important;
+    }
+
+    /* Textarea helper instructions (e.g. "Press ⌘+Enter to apply") */
+    div[data-testid="stTextArea"] span,
+    div[data-testid="stTextArea"] small,
+    div[data-testid="stTextArea"] div[data-testid="stInputInstructions"] {
+        color: #94a3b8 !important;
+        -webkit-text-fill-color: #94a3b8 !important;
+        font-size: 0.82rem !important;
+        padding-top: 4px !important;
+    }
+
+    /* Word and character counters */
+    div[data-testid="stCaptionContainer"] p,
+    .stCaption {
+        color: #cbd5e1 !important;
+        -webkit-text-fill-color: #cbd5e1 !important;
+        font-size: 0.92rem !important;
+        font-weight: 600 !important;
+    }
+
+    /* ========================================================================
+       7. BUTTON STYLING & HIGH-CONTRAST VISIBILITY FIXES
+       ======================================================================== */
+    /* Primary buttons (e.g. Check News Now) */
+    div[data-testid="stButton"] > button[kind="primary"],
+    button[data-testid="stBaseButton-primary"] {
+        background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+        color: #ffffff !important;
+        -webkit-text-fill-color: #ffffff !important;
+        border: 1px solid #f87171 !important;
+        border-radius: 10px !important;
+        font-weight: 700 !important;
+        font-size: 0.98rem !important;
+        padding: 10px 22px !important;
+        box-shadow: 0 4px 18px rgba(239, 68, 68, 0.4) !important;
+        transition: all 0.2s ease !important;
+    }
+    div[data-testid="stButton"] > button[kind="primary"]:hover,
+    button[data-testid="stBaseButton-primary"]:hover {
+        background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+        box-shadow: 0 6px 24px rgba(239, 68, 68, 0.6) !important;
+        transform: translateY(-1px) !important;
+    }
+
+    /* Secondary buttons (e.g. Clear, Paste Random Sample, Shuffle) */
+    div[data-testid="stButton"] > button:not([kind="primary"]),
+    button[data-testid="stBaseButton-secondary"] {
+        background: rgba(30, 41, 59, 0.9) !important;
+        color: #f1f5f9 !important;
+        -webkit-text-fill-color: #f1f5f9 !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 10px !important;
+        font-weight: 600 !important;
+        font-size: 0.95rem !important;
+        padding: 10px 20px !important;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35) !important;
+        transition: all 0.2s ease !important;
+    }
+    div[data-testid="stButton"] > button:not([kind="primary"]):hover,
+    button[data-testid="stBaseButton-secondary"]:hover {
+        background: rgba(51, 65, 85, 0.95) !important;
+        border-color: rgba(56, 189, 248, 0.65) !important;
+        color: #38bdf8 !important;
+        -webkit-text-fill-color: #38bdf8 !important;
+        box-shadow: 0 4px 18px rgba(56, 189, 248, 0.25) !important;
+        transform: translateY(-1px) !important;
+    }
+
+    /* Radio navigation menu labels */
+    div[data-testid="stRadio"] label {
+        color: #e2e8f0 !important;
+        -webkit-text-fill-color: #e2e8f0 !important;
+        font-weight: 600 !important;
+    }
+    div[data-testid="stRadio"] label p {
+        color: #e2e8f0 !important;
+        -webkit-text-fill-color: #e2e8f0 !important;
+    }
+    div[data-testid="stRadio"] label:hover p {
+        color: #38bdf8 !important;
+        -webkit-text-fill-color: #38bdf8 !important;
+    }
     </style>
 
     <!-- Floating Background News Watermarks & Elements -->
@@ -730,6 +1018,8 @@ def render_highlighted_text(sentence_results: List[Dict[str, Any]]) -> str:
 # -----------------------------------------------------------------------------
 if "nav_page" not in st.session_state:
     st.session_state["nav_page"] = "🏠 Explore Detected Fake News"
+if "custom_news_input" not in st.session_state:
+    st.session_state["custom_news_input"] = ""
 if "news_text_area" not in st.session_state:
     st.session_state["news_text_area"] = ""
 if "random_seed" not in st.session_state:
@@ -739,9 +1029,25 @@ if "auto_analyze" not in st.session_state:
 
 
 # -----------------------------------------------------------------------------
-# 7. TOP NAVIGATION BAR
+# 7. TOP NAVIGATION BAR & BRAND HEADER
 # -----------------------------------------------------------------------------
-st.markdown("### 🛡️ TruthLens AI – Disinformation & Fake News Intelligence")
+st.markdown(
+    """
+    <div class="truthlens-banner">
+        <div class="truthlens-main-title">
+            <span class="truthlens-icon">🛡️</span>
+            <span class="truthlens-name">TruthLens AI</span>
+            <span class="truthlens-divider">–</span>
+            <span class="truthlens-desc">Disinformation &amp; Fake News Intelligence</span>
+        </div>
+        <div class="truthlens-pill-status">
+            <span class="pill-dot"></span>
+            <span class="pill-label">MIL-SPEC NLP DETECTOR ACTIVE</span>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
 NAV_OPTIONS = [
     "🏠 Explore Detected Fake News",
@@ -856,6 +1162,7 @@ if st.session_state["nav_page"] == "🏠 Explore Detected Fake News":
 
             # Button to directly test in detector
             if st.button(f"🔍 Inspect in AI Detector", key=f"inspect_{story['id']}", use_container_width=True):
+                st.session_state["custom_news_input"] = story["full_text"]
                 st.session_state["news_text_area"] = story["full_text"]
                 st.session_state["nav_page"] = "🔍 Check Your Own News (AI Detector)"
                 st.session_state["auto_analyze"] = True
@@ -882,14 +1189,18 @@ elif st.session_state["nav_page"] == "🔍 Check Your Own News (AI Detector)":
         "and provide a **sentence-by-sentence breakdown** revealing **what part of the news is fake**."
     )
 
+    # Sync session state if updated from showcase
+    if "custom_news_input" not in st.session_state:
+        st.session_state["custom_news_input"] = st.session_state.get("news_text_area", "")
+
     # Text Input Area
     user_input = st.text_area(
         label="Enter news article or headline to analyze:",
-        value=st.session_state["news_text_area"],
         height=180,
         placeholder="Paste headline or multi-sentence news story here (e.g. at least 10 words)...",
         key="custom_news_input",
     )
+    st.session_state["news_text_area"] = user_input
 
     # Word and Character Counters
     clean_input = user_input.strip()
@@ -909,12 +1220,14 @@ elif st.session_state["nav_page"] == "🔍 Check Your Own News (AI Detector)":
         analyze_clicked = st.button("🔍 Check News Now", type="primary", use_container_width=True)
     with b_col2:
         if st.button("🧹 Clear", type="secondary", use_container_width=True):
+            st.session_state["custom_news_input"] = ""
             st.session_state["news_text_area"] = ""
             st.session_state["auto_analyze"] = False
             st.rerun()
     with b_col3:
         if st.button("🎲 Paste Random Sample", use_container_width=True):
             pick = random.choice(DETECTED_FAKE_NEWS_DB)
+            st.session_state["custom_news_input"] = pick["full_text"]
             st.session_state["news_text_area"] = pick["full_text"]
             st.session_state["auto_analyze"] = True
             st.rerun()
