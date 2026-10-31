@@ -1,0 +1,32 @@
+# Python Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Large Dataset (WELFake_Dataset.csv is 234MB, exceeds GitHub 100MB limit)
+*.csv
+Data/
+**/Data/
+backend/Data/
+
+# macOS / OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+
+# Temporary Archives & Build folders
+*.zip
+.codex-ppt-build/
+
+# Local Streamlit Cache / Secrets
+.streamlit/secrets.toml
