@@ -1161,12 +1161,19 @@ if st.session_state["nav_page"] == "🏠 Explore Detected Fake News":
             )
 
             # Button to directly test in detector
-            if st.button(f"🔍 Inspect in AI Detector", key=f"inspect_{story['id']}", use_container_width=True):
-                st.session_state["custom_news_input"] = story["full_text"]
-                st.session_state["news_text_area"] = story["full_text"]
+            def inspect_story_callback(text_to_inspect: str):
+                st.session_state["custom_news_input"] = text_to_inspect
+                st.session_state["news_text_area"] = text_to_inspect
                 st.session_state["nav_page"] = "🔍 Check Your Own News (AI Detector)"
                 st.session_state["auto_analyze"] = True
-                st.rerun()
+
+            st.button(
+                "🔍 Inspect in AI Detector",
+                key=f"inspect_{story['id']}",
+                use_container_width=True,
+                on_click=inspect_story_callback,
+                args=(story["full_text"],),
+            )
 
     st.markdown("---")
     st.markdown("#### 💡 How Does the AI Know a News is Fake?")
@@ -1214,23 +1221,26 @@ elif st.session_state["nav_page"] == "🔍 Check Your Own News (AI Detector)":
     with cnt2:
         st.caption(f"🔤 **Character Count:** {char_count}")
 
+    # Callback handlers to mutate state BEFORE widget instantiation on rerun
+    def handle_clear_text():
+        st.session_state["custom_news_input"] = ""
+        st.session_state["news_text_area"] = ""
+        st.session_state["auto_analyze"] = False
+
+    def handle_paste_sample():
+        pick = random.choice(DETECTED_FAKE_NEWS_DB)
+        st.session_state["custom_news_input"] = pick["full_text"]
+        st.session_state["news_text_area"] = pick["full_text"]
+        st.session_state["auto_analyze"] = True
+
     # Action Buttons
     b_col1, b_col2, b_col3, _ = st.columns([1.5, 1.2, 1.8, 2.5])
     with b_col1:
         analyze_clicked = st.button("🔍 Check News Now", type="primary", use_container_width=True)
     with b_col2:
-        if st.button("🧹 Clear", type="secondary", use_container_width=True):
-            st.session_state["custom_news_input"] = ""
-            st.session_state["news_text_area"] = ""
-            st.session_state["auto_analyze"] = False
-            st.rerun()
+        st.button("🧹 Clear", type="secondary", use_container_width=True, on_click=handle_clear_text)
     with b_col3:
-        if st.button("🎲 Paste Random Sample", use_container_width=True):
-            pick = random.choice(DETECTED_FAKE_NEWS_DB)
-            st.session_state["custom_news_input"] = pick["full_text"]
-            st.session_state["news_text_area"] = pick["full_text"]
-            st.session_state["auto_analyze"] = True
-            st.rerun()
+        st.button("🎲 Paste Random Sample", use_container_width=True, on_click=handle_paste_sample)
 
     # Trigger automatic analysis if arriving from showcase inspect button
     should_run = analyze_clicked or st.session_state.get("auto_analyze", False)
